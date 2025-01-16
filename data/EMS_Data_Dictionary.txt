@@ -1,0 +1,112 @@
+Data Dictionary: EMS Operations Hourly Data
+==================================================
+
+General Information:
+- Dataset Name: EMS Operations Hourly Data
+- Description: This data provides hourly aggregates of various operational and environmental features for a 911 urban EMS (ambulance) system, which handles approximately 130,000 911 medical and trauma calls annually.
+- Date Range: 11/1/2014 - 11/1/2024
+- Source: Aggregated from CAD (Computer-Aided Dispatch) SQL database.
+- Key Notes: Some metrics are not consistently collected over time and may require imputation or cleaning.
+
+==================================================
+
+Column Descriptions:
+year:
+  The year in which the data was recorded.
+
+month:
+  The month in which the data was recorded.
+
+day:
+  The day of the month when the data was recorded.
+
+day_of_week:
+  The day of the week (e.g., Monday, Tuesday) for the recorded data.
+
+hour:
+  The hour of the day (0-23) when the data was recorded.
+
+incident_count:
+  Count of incidents entered into the CAD system. These do not always result in a response.
+
+dist_mean:
+  Average distance from the location of the resource at assignment time to the location of the scene, measured in miles (as the crow flies).
+
+perc_from_hosp:
+  Percentage of resources dispatched to calls from a hospital, often leading to potential response delays.
+
+base_ed_divert:
+  Binary indicator for the main hospital and trauma center diversion status.
+
+system_overload:
+  Arbitrary status set by management to indicate critical system overload. Overrides hospital choice to transport to the nearest appropriate facility.
+
+weather_status:
+  Severe weather status, functioning similarly to system_overload. Emergent calls during this status are excluded from response time compliance calculations.
+
+RTC:
+  Response Time Compliance based on the National Fire Protection Association (NFPA) Standard 1710. NFPA Standard 1710 establishes a 60-second 'turnout time' and 480-second 'travel time' (together, 540 seconds or 9-minute 'response time') benchmark for the arrival of an ALS unit at an emergency medical incident in not less than 90% of dispatched incidents.
+
+emergent_responses:
+  Count of emergency responses dispatched during the hour.
+
+non_emergent_responses:
+  Count of non-emergency responses dispatched during the hour.
+
+mean_response_all:
+  Average response time for all incidents during the hour, measured in seconds.
+
+mean_response_emergent:
+  Average response time for emergency incidents, measured in seconds.
+
+mean_response_non_emergent:
+  Average response time for non-emergency incidents, measured in seconds.
+
+percentile_90_response_all:
+  90th percentile of response times for all incidents during the hour, measured in seconds.
+
+percentile_90_response_emergent:
+  90th percentile of response times for emergency incidents, measured in seconds.
+
+percentile_90_response_non_emergent:
+  90th percentile of response times for non-emergency incidents, measured in seconds.
+
+bls_ambulances:
+  Number of Basic Life Support ambulances active during the hour.
+
+satellite_ambulances:
+  ALS ambulances that start and end shifts at satellite stations rather than the base hospital.
+
+als_ambulances:
+  Number of Advanced Life Support ambulances active during the hour.
+
+fly_cars:
+  ALS-capable solo personnel vehicles that quickly respond to calls. These are non-transport units typically used in high-volume areas.
+
+total_cars:
+  Total number of vehicles active during the hour, including ALS, BLS, satellite, and fly cars.
+
+non_emergent_transports:
+  Count of transports for non-emergency cases during the hour.
+
+emergent_transports:
+  Count of transports for emergency cases during the hour.
+
+chute_times_all:
+  Average chute time (elapsed time between resource assignment and when it starts moving) for all incidents, measured in seconds.
+
+chute_times_non_emergent:
+  Average chute time for non-emergency incidents, measured in seconds.
+
+chute_times_emergent:
+  Average chute time for emergency incidents, measured in seconds.
+
+temperature:
+  Average temperature during the hour.
+
+rain:
+  Amount of rainfall during the hour.
+
+snowfall:
+  Amount of snowfall during the hour.
+
