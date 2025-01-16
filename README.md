@@ -103,14 +103,14 @@ The analysis uses data aggregated hourly from:
 ```
 project/
 ├── data/
-│   ├── ems_ops.csv
-│   └── EMS_Data_Dictionary.txt
+│   ├── [ems_ops.csv](data/ems_ops.csv)
+│   └── [EMS_Data_Dictionary.txt](data/EMS_Data_Dictionary.txt)
 ├── notebooks/
-│   └── EMS_Operations_Analysis.ipynb
+│   └── [EMS_Operations_Analysis.ipynb](notebooks/EMS_Operations_Analysis.ipynb)
 ├── models/
-│   └── logistic_regression.pkl
+│   └── [logistic_regression.pkl](models/logistic_regression.pkl)
 ├── visualizations/
-│   └── response_times_trends.png
+│   └── [response_times_trends.png](visualizations/response_times_trends.png)
 └── README.md
 ```
 
