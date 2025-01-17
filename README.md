@@ -100,7 +100,7 @@ The analysis uses data aggregated hourly from:
 - Model `dist_mean` as a target variable to identify factors increasing travel distances.
 
 ## File Structure
-```
+
 project/
 ├── data/
 │   ├── [ems_ops.csv](data/ems_ops.csv)
@@ -112,7 +112,7 @@ project/
 ├── visualizations/
 │   └── [response_times_trends.png](visualizations/response_times_trends.png)
 └── README.md
-```
+
 
 ## Requirements
 - Python 3.8+
