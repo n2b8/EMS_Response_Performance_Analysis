@@ -133,3 +133,39 @@ def mann_whitney_test(group1, group0, alternative='two-sided', group1_name="Comp
             print(f"Conclusion: {group1_name} is significantly larger (distribution-wise) than {group0_name}.")
     else:
         print(f"Conclusion: No significant difference found between {group1_name} and {group0_name}.")
+
+def plot_kde_with_groups(group1, group0, group1_name="Group 1", group0_name="Group 0", title="Distribution by Group", xlabel="Values", ylabel="Density"):
+    """
+    Plot KDE for two groups with labeled distributions.
+
+    Parameters:
+        group1 (array-like): Data for the first group. Must be 1-dimensional.
+        group0 (array-like): Data for the second group. Must be 1-dimensional.
+        group1_name (str, optional): Name of the first group for labeling purposes. Default is "Group 1".
+        group0_name (str, optional): Name of the second group for labeling purposes. Default is "Group 0".
+        title (str, optional): Title of the plot. Default is "Distribution by Group".
+        xlabel (str, optional): Label for the x-axis. Default is "Values".
+        ylabel (str, optional): Label for the y-axis. Default is "Density".
+
+    Returns:
+        None: Displays the KDE plot for the two groups.
+
+    Example:
+        >>> import numpy as np
+        >>> group1 = np.random.normal(loc=5, scale=1, size=100)
+        >>> group0 = np.random.normal(loc=3, scale=1.5, size=100)
+        >>> plot_kde_with_groups(group1, group0, group1_name="Group A", group0_name="Group B")
+    """
+    # Validate input dimensions
+    if not np.ndim(group1) == 1 or not np.ndim(group0) == 1:
+        raise ValueError("Both group1 and group0 must be 1-dimensional arrays.")
+    
+    # Create the KDE plot
+    sns.kdeplot(group1, label=group1_name, fill=True, color="blue", alpha=0.6)
+    sns.kdeplot(group0, label=group0_name, fill=True, color="orange", alpha=0.6)
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
