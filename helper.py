@@ -16,12 +16,14 @@ class ComplianceTester:
         self.data = data
         self.compliance_column = compliance_column
 
-    def ks_test_normality(self, feature):
+    def ks_test_normality(self, feature, group1_name="Compliant Group", group0_name="Non-Compliant Group"):
         """
-        Perform KS tests for normality on the compliant and non-compliant groups.
+        Perform KS tests for normality on the compliant and non-compliant groups with verbose output.
 
         Parameters:
             feature (str): Name of the feature to test.
+            group1_name (str): Label for compliant group (default: "Compliant Group").
+            group0_name (str): Label for non-compliant group (default: "Non-Compliant Group").
         """
         group1 = self.data[self.data[self.compliance_column] == 1][feature].dropna()
         group0 = self.data[self.data[self.compliance_column] == 0][feature].dropna()
@@ -34,60 +36,134 @@ class ComplianceTester:
         mean0, std0 = np.mean(group0), np.std(group0)
         stat0, p_value0 = kstest(group0, 'norm', args=(mean0, std0))
         
-        print(f"\nKolmogorov-Smirnov Normality Test for {feature}:")
-        print(f"Compliant Group: KS Statistic = {stat1:.4f}, P-Value = {p_value1:.4f}")
-        print(f"Non-Compliant Group: KS Statistic = {stat0:.4f}, P-Value = {p_value0:.4f}")
-
-    def mann_whitney_test(self, feature, alternative='two-sided'):
+        # Verbose output
+        print(f"\n=== Kolmogorov-Smirnov Normality Test for {feature} ===")
+        print(f"{group1_name} Results:")
+        print(f"  KS Statistic: {stat1:.4f}")
+        print(f"  P-Value: {p_value1:.4f}")
+        if p_value1 > 0.05:
+            print(f"  Conclusion: Fail to reject the null hypothesis. {group1_name} appears normally distributed.")
+        else:
+            print(f"  Conclusion: Reject the null hypothesis. {group1_name} does not appear normally distributed.")
+        
+        print(f"\n{group0_name} Results:")
+        print(f"  KS Statistic: {stat0:.4f}")
+        print(f"  P-Value: {p_value0:.4f}")
+        if p_value0 > 0.05:
+            print(f"  Conclusion: Fail to reject the null hypothesis. {group0_name} appears normally distributed.")
+        else:
+            print(f"  Conclusion: Reject the null hypothesis. {group0_name} does not appear normally distributed.")
+        
+    def mann_whitney_test(self, feature, alternative='two-sided', group1_name="Compliant", group0_name="Non-Compliant"):
         """
-        Perform the Mann-Whitney U test.
+        Perform a Mann-Whitney U test with verbose output.
 
         Parameters:
             feature (str): Name of the feature to test.
             alternative (str): Alternative hypothesis ('two-sided', 'less', 'greater').
+            group1_name (str): Label for compliant group (default: "Compliant").
+            group0_name (str): Label for non-compliant group (default: "Non-Compliant").
         """
         group1 = self.data[self.data[self.compliance_column] == 1][feature].dropna()
         group0 = self.data[self.data[self.compliance_column] == 0][feature].dropna()
         stat, p_value = mannwhitneyu(group1, group0, alternative=alternative)
         
-        print(f"\nMann-Whitney U Test for {feature}:")
-        print(f"U Statistic = {stat:.4f}, P-Value = {p_value:.4f}")
+        print(f"\n=== Mann-Whitney U Test for {feature} ===")
+        print(f"Testing {group1_name} vs {group0_name} (Alternative Hypothesis: '{alternative}')")
+        print(f"  U Statistic: {stat:.4f}")
+        print(f"  P-Value: {p_value:.4f}")
         if p_value < 0.05:
-            print("Result: Significant difference.")
+            if alternative == 'two-sided':
+                print(f"  Conclusion: Significant difference found between {group1_name} and {group0_name}.")
+            elif alternative == 'less':
+                print(f"  Conclusion: {group1_name} is significantly smaller (distribution-wise) than {group0_name}.")
+            elif alternative == 'greater':
+                print(f"  Conclusion: {group1_name} is significantly larger (distribution-wise) than {group0_name}.")
         else:
-            print("Result: No significant difference.")
-
-    def plot_kde(self, feature):
+            print(f"  Conclusion: No significant difference found between {group1_name} and {group0_name}.")
+        
+    def plot_side_by_side_kde(self, feature, group1_name="Compliant", group0_name="Non-Compliant"):
         """
-        Plot KDE for compliant and non-compliant groups.
+        Generate side-by-side KDE plots for compliant and non-compliant groups with normal distribution overlays.
 
         Parameters:
             feature (str): Name of the feature to plot.
+            group1_name (str): Label for compliant group (default: "Compliant").
+            group0_name (str): Label for non-compliant group (default: "Non-Compliant").
         """
         group1 = self.data[self.data[self.compliance_column] == 1][feature].dropna()
         group0 = self.data[self.data[self.compliance_column] == 0][feature].dropna()
-        
-        sns.kdeplot(group1, label="Compliant", fill=True, color="blue", alpha=0.6)
-        sns.kdeplot(group0, label="Non-Compliant", fill=True, color="orange", alpha=0.6)
-        plt.title(f"KDE Plot for {feature} by Compliance")
+
+        # Calculate mean and standard deviation for normal distribution overlay
+        mean1, std1 = np.mean(group1), np.std(group1)
+        mean0, std0 = np.mean(group0), np.std(group0)
+
+        # Side-by-side plots
+        fig, ax = plt.subplots(1, 2, figsize=(14, 6))
+
+        # Compliant group plot
+        sns.kdeplot(group1, fill=True, label=f"{group1_name} Data", color="blue", alpha=0.6, ax=ax[0])
+        x1 = np.linspace(mean1 - 4 * std1, mean1 + 4 * std1, 1000)
+        ax[0].plot(x1, norm.pdf(x1, mean1, std1), label="Normal Distribution", color="red", linestyle="--")
+        ax[0].set_title(f"{group1_name} Distribution with Normal Fit")
+        ax[0].set_xlabel(feature)
+        ax[0].set_ylabel("Density")
+        ax[0].legend()
+
+        # Non-compliant group plot
+        sns.kdeplot(group0, fill=True, label=f"{group0_name} Data", color="orange", alpha=0.6, ax=ax[1])
+        x0 = np.linspace(mean0 - 4 * std0, mean0 + 4 * std0, 1000)
+        ax[1].plot(x0, norm.pdf(x0, mean0, std0), label="Normal Distribution", color="red", linestyle="--")
+        ax[1].set_title(f"{group0_name} Distribution with Normal Fit")
+        ax[1].set_xlabel(feature)
+        ax[1].set_ylabel("Density")
+        ax[1].legend()
+
+        plt.tight_layout()
+        plt.show()
+
+    def plot_combined_kde(self, feature, group1_name="Compliant", group0_name="Non-Compliant"):
+        """
+        Generate a single KDE plot showing both groups' distributions.
+
+        Parameters:
+            feature (str): Name of the feature to plot.
+            group1_name (str): Label for compliant group (default: "Compliant").
+            group0_name (str): Label for non-compliant group (default: "Non-Compliant").
+        """
+        group1 = self.data[self.data[self.compliance_column] == 1][feature].dropna()
+        group0 = self.data[self.data[self.compliance_column] == 0][feature].dropna()
+
+        # Combined KDE plot
+        plt.figure(figsize=(8, 6))
+        sns.kdeplot(group1, label=f"{group1_name} Data", fill=True, color="blue", alpha=0.6)
+        sns.kdeplot(group0, label=f"{group0_name} Data", fill=True, color="orange", alpha=0.6)
+        plt.title(f"Combined KDE Plot for {feature} by Compliance")
         plt.xlabel(feature)
         plt.ylabel("Density")
         plt.legend()
+        plt.tight_layout()
         plt.show()
 
-    def summarize_stats(self, feature):
+    def summarize_stats(self, feature, group1_name="Compliant", group0_name="Non-Compliant"):
         """
         Display summary statistics for compliant and non-compliant groups.
 
         Parameters:
             feature (str): Name of the feature to summarize.
+            group1_name (str): Label for compliant group (default: "Compliant").
+            group0_name (str): Label for non-compliant group (default: "Non-Compliant").
         """
         group1 = self.data[self.data[self.compliance_column] == 1][feature].dropna()
         group0 = self.data[self.data[self.compliance_column] == 0][feature].dropna()
         
-        print(f"\nSummary Statistics for {feature}:")
-        print(f"Compliant Median: {group1.median():.4f}, Mean: {group1.mean():.4f}")
-        print(f"Non-Compliant Median: {group0.median():.4f}, Mean: {group0.mean():.4f}")
+        print(f"\n=== Summary Statistics for {feature} ===")
+        print(f"{group1_name} Group:")
+        print(f"  Median: {group1.median():.4f}")
+        print(f"  Mean: {group1.mean():.4f}")
+        print(f"{group0_name} Group:")
+        print(f"  Median: {group0.median():.4f}")
+        print(f"  Mean: {group0.mean():.4f}")
 
     def test_feature(self, feature, alternative='two-sided'):
         """
@@ -97,7 +173,9 @@ class ComplianceTester:
             feature (str): Name of the feature to test.
             alternative (str): Alternative hypothesis for the Mann-Whitney test.
         """
+        print(f"\n=== Testing Feature: {feature} ===")
         self.ks_test_normality(feature)
         self.mann_whitney_test(feature, alternative)
-        self.plot_kde(feature)
+        self.plot_side_by_side_kde(feature)
+        self.plot_combined_kde(feature)
         self.summarize_stats(feature)
