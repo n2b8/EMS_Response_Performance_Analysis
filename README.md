@@ -88,16 +88,20 @@ The analysis leverages the following datasets:
 ---
 
 ## Results
-- **Top Influential Features**:
-  1. `dist_mean`: Travel distance to incidents.
-  2. `chute_times_emergent`: Time between dispatch and vehicle movement.
-  3. `als_resources_per_emergent_response`: ALS availability per emergent response.
-  4. `percentile_90_response_emergent_lag1`: Lagged compliance.
-  5. `resp_per_ambulance`: Resource efficiency.
+### Top Influential Features
+1. **`dist_mean`**: Travel distance to incidents.
+2. **`chute_times_emergent`**: Dispatch-to-departure times.
+3. **`als_resources_per_emergent_response`**: ALS availability per emergent response.
+4. **`rolling_emergent_avg_interaction`**: Temporal dependencies captured in interaction terms.
+5. **`resp_per_ambulance`**: Resource efficiency.
 
-- **Model Performance**:
-  - Logistic Regression: **F1-Score = 0.765**, **ROC-AUC = 0.803**.
-  - Decision Tree: **F1-Score = 0.712**.
+### Model Performance
+- **Logistic Regression**:
+  - **F1-Score = 0.800** (at a threshold of 0.45).
+  - Cross-validation: **Mean F1-Score = 0.7947** (±0.0023).
+- **Decision Tree**:
+  - **F1-Score = 0.780** after hyperparameter tuning.
+  - Cross-validation: **Mean F1-Score = 0.7823** (±0.0040).
 
 ---
 
@@ -122,11 +126,15 @@ The analysis leverages the following datasets:
 
 ## File Structure
 
-- **[data/ems_ops.csv](data/ems_ops.csv)**: The raw dataset containing hourly operational metrics.
-- **[data/EMS_Data_Dictionary.txt](data/EMS_Data_Dictionary.txt)**: Data dictionary describing dataset columns.
-- **[notebooks/EMS_Operations_Analysis.ipynb](notebooks/EMS_Operations_Analysis.ipynb)**: The analysis notebook for data preparation, EDA, and modeling.
-- **[models/logistic_regression.pkl](models/logistic_regression.pkl)**: Trained logistic regression model for RTC prediction.
-- **[visualizations/response_times_trends.png](visualizations/response_times_trends.png)**: A visualization showing trends in response times and compliance.
+- **[data/](data/)**:
+  - **[data/ems_ops.csv](data/ems_ops.csv)**: The raw dataset containing hourly operational metrics.
+  - **[data/EMS_Data_Dictionary.txt](data/EMS_Data_Dictionary.txt)**: Data dictionary describing `ems_ops.csv` dataset columns.
+  - **[data/cleaned_data.csv](data/cleaned_data.csv)**: Cleaned and prepared data in csv format.
+- **[models/](models/)**:
+  - **[models/logreg_model.pkl](models/logreg_model.pkl)**: Trained logistic regression model for RTC prediction.
+  - **[models/dtc_model.pkl](models/dtc_model.pkl)**: Trained decision tree classifier model for RTC prediction.
+- **[index.ipynb](notebooks/index.ipynb)**: The analysis notebook for data preparation, EDA, and modeling.
+- **[visualizations/](visualizations/)**:
 - **[presentation.pdf](presentation.pdf)**: A PDF version of a Keynote presentation summarizing the findings and recommendations.
 
 ---
