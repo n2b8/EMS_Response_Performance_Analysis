@@ -2,6 +2,8 @@
 
 ![Ambulance](images/ambulance1.jpg)
 
+*Image source: [Envato.com](https://envato.com)*
+
 ---
 
 ## Table of Contents
@@ -160,4 +162,5 @@ By implementing these strategies and re-evaluating the results after 3–6 month
 
 ## Acknowledgments
 - Data provided by the EMS agency.
-- Weather data sourced from the Open-Meteo API.
+- Weather data sourced from the [Open-Meteo API](https://open-meteo.com/).
+- Image(s) and graphic(s) sourced from [Envato.com](https://envato.com).
