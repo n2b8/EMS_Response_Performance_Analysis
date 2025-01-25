@@ -92,8 +92,6 @@ The analysis leverages the following datasets:
 1. **`dist_mean`**: Travel distance to incidents.
 2. **`chute_times_emergent`**: Dispatch-to-departure times.
 3. **`als_resources_per_emergent_response`**: ALS availability per emergent response.
-4. **`rolling_emergent_avg_interaction`**: Temporal dependencies captured in interaction terms.
-5. **`resp_per_ambulance`**: Resource efficiency.
 
 ### Model Performance
 - **Logistic Regression**:
@@ -106,14 +104,24 @@ The analysis leverages the following datasets:
 ---
 
 ## Recommendations
-1. **Optimize Ambulance Placement**:
-   - Reduce `dist_mean` by strategically positioning resources in high-demand areas.
-2. **Reduce Dispatch Delays**:
-   - Address delays in `chute_times_emergent` through process refinements and staff engagement.
-3. **Enhance Resource Allocation**:
-   - Increase BLS unit use for non-emergent calls to free up ALS units for emergencies.
-4. **Reevaluate Staffing Ratios**:
-   - Analyze peak-time ALS demand to ensure appropriate coverage.
+
+Based on the analysis, the following recommendations are proposed to improve Response Time Compliance (RTC). These strategies focus on actionable factors the agency can directly influence and should be tested over a 3–6 month period, with data re-evaluated to measure their effectiveness.
+
+1. **Reduce Travel Distance During Peak Hours**:
+   - **Key Insight**: Longer travel distances during peak hours significantly reduce RTC compliance.
+   - **Action**: Reevaluate and optimize resource placement to minimize travel distances, particularly during peak hours (7 AM–9 PM). Implement dynamic deployment strategies based on historical and real-time incident data, focusing on high-demand areas.
+
+2. **Address Chute Time Delays**:
+   - **Key Insight**: Delays in dispatch-to-departure times are strongly associated with non-compliance.
+   - **Action**: Investigate factors contributing to delays, such as time spent at hospitals and mid-shift crew breaks. Implement policies to streamline hospital-based transitions and formalize rest periods to prevent dispatch interruptions. Engage staff to gather insights and address operational challenges affecting chute times.
+
+3. **Optimize ALS Resource Allocation**:
+   - **Key Insight**: Inconsistent ALS staffing levels during peak times and overuse of ALS units for non-emergent calls reduce availability for true emergencies.
+   - **Action**: Adjust staffing ratios dynamically to ensure adequate ALS coverage during high-demand periods. Increase the use of BLS units for non-emergent calls and consider allowing BLS units to respond to certain emergent calls under specific guidelines. Reassess dispatch codes to determine if certain incidents require emergent responses.
+
+---
+
+By implementing these strategies and re-evaluating the results after 3–6 months, the agency can iteratively refine its operations to improve RTC compliance and overall efficiency.
 
 ---
 
@@ -133,8 +141,7 @@ The analysis leverages the following datasets:
 - **[models/](models/)**:
   - **[models/logreg_model.pkl](models/logreg_model.pkl)**: Trained logistic regression model for RTC prediction.
   - **[models/dtc_model.pkl](models/dtc_model.pkl)**: Trained decision tree classifier model for RTC prediction.
-- **[index.ipynb](notebooks/index.ipynb)**: The analysis notebook for data preparation, EDA, and modeling.
-- **[visualizations/](visualizations/)**:
+- **[index.ipynb](index.ipynb)**: The analysis notebook for data preparation, EDA, and modeling.
 - **[presentation.pdf](presentation.pdf)**: A PDF version of a Keynote presentation summarizing the findings and recommendations.
 
 ---
