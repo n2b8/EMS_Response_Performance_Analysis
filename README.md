@@ -26,7 +26,7 @@
 ---
 
 ## Project Overview
-This project evaluates the operational metrics of a large urban EMS agency managing approximately 130,000 annual 911 calls. The primary focus is on achieving **Response Time Compliance (RTC)**, defined as meeting the 90th percentile response time benchmark of 540 seconds (9 minutes) for emergent calls, as per **NFPA Standard 1710**.
+This project evaluates the operational metrics of a large urban EMS agency managing approximately 130,000 annual 911 calls. The primary focus is on achieving **Response Time Compliance (RTC)**, defined as meeting the 90th percentile response time benchmark of 540 seconds (9 minutes) for emergent calls, as per **[NFPA Standard 1710](https://www.nfpa.org/codes-and-standards/nfpa-1710-standard-development/1710)**.
 
 ---
 
