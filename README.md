@@ -137,15 +137,15 @@ By implementing these strategies and re-evaluating the results after 3–6 month
 ## File Structure
 
 - **[data/](data/)**:
-  - **[data/ems_ops.csv](data/ems_ops.csv)**: The raw dataset containing hourly operational metrics.
-  - **[data/EMS_Data_Dictionary.txt](data/EMS_Data_Dictionary.txt)**: Data dictionary describing `ems_ops.csv` dataset columns.
-  - **[data/cleaned_data.csv](data/cleaned_data.csv)**: Cleaned and prepared data in csv format.
+  - **[ems_ops.csv](data/ems_ops.csv)**: The raw dataset containing hourly operational metrics.
+  - **[EMS_Data_Dictionary.txt](data/EMS_Data_Dictionary.txt)**: Data dictionary describing `ems_ops.csv` dataset columns.
+  - **[cleaned_data.csv](data/cleaned_data.csv)**: Cleaned and prepared data in csv format.
 - **[models/](models/)**:
-  - **[models/logreg_model.pkl](models/logreg_model.pkl)**: Trained logistic regression model for RTC prediction.
-  - **[models/dtc_model.pkl](models/dtc_model.pkl)**: Trained decision tree classifier model for RTC prediction.
+  - **[logreg_model.pkl](models/logreg_model.pkl)**: Trained logistic regression model for RTC prediction.
+  - **[dtc_model.pkl](models/dtc_model.pkl)**: Trained decision tree classifier model for RTC prediction.
 - **[visualizations/](visualizations/)**:
-  - **[visualizations/kde_output.ipynb](visualizations/kde_output.ipynb)**: Notebook for dynamically outputting kde plots for selected features.
-  - **[visualizations/kde_dist_mean_plot.png](visualizations/kde_dist_mean_plot.png)**: KDE plot for dist_mean by compliance.
+  - **[kde_output.ipynb](visualizations/kde_output.ipynb)**: Notebook for dynamically outputting kde plots for selected features.
+  - **[kde_dist_mean_plot.png](visualizations/kde_dist_mean_plot.png)**: KDE plot for dist_mean by compliance.
 - **[index.ipynb](index.ipynb)**: The analysis notebook for data preparation, EDA, and modeling.
 - **[helper.py](helper.py)**: Provides ComplianceTester class which allows for statistical comparison analysis of selected feature(s).
 - **[presentation.pdf](presentation.pdf)**: A PDF version of a Keynote presentation summarizing the findings and recommendations.
