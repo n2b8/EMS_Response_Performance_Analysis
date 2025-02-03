@@ -150,7 +150,7 @@ By implementing these strategies and re-evaluating the results after 3–6 month
 ---
 
 ## Requirements
-- **Python 3.8+**
+- **Python 3.9+**
 - Libraries:
   - pandas
   - numpy
